@@ -15,6 +15,8 @@ import { ShippingManagement } from './Admin/Pages/ShippingManagement'
 import { DropShippingManagement } from './Admin/Pages/DropShippingManagement'
 import { CouponManagement } from './Admin/Pages/CouponManagement'
 import { Settings } from './Admin/Pages/Settings'
+import { AllProducts } from './Admin/Components/AllProducts'
+import { AddProduct } from './Admin/Components/AddProduct'
 
 function App() {
 
@@ -31,8 +33,8 @@ function App() {
           <Route path='customers' element={<Reports />} />
           <Route path='inventory' element={<Reports />} />
           <Route path='product-management' element={<ProductManagement />} />
-          <Route path='all-products' element={<ProductManagement />} />
-          <Route path='add-product' element={<ProductManagement />} />
+          <Route path='all-products' element={<AllProducts />} />
+          <Route path='add-product' element={<AddProduct />} />
           <Route path='order-management' element={<OrderManagement />} />
           <Route path='all-order' element={<OrderManagement />} />
           <Route path='add-order' element={<OrderManagement />} />
