@@ -2,6 +2,6 @@ import React from 'react'
 
 export const AdminDashboard = () => {
   return (
-    <div>Admin</div>
+    <div>Admin Dashboard</div>
   )
 }
