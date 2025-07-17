@@ -36,7 +36,7 @@ function App() {
           <Route path='all-products' element={<AllProducts />} />
           <Route path='add-product' element={<AddProduct />} />
           <Route path='order-management' element={<OrderManagement />} />
-          <Route path='all-order' element={<OrderManagement />} />
+          <Route path='all-orders' element={<OrderManagement />} />
           <Route path='add-order' element={<OrderManagement />} />
           <Route path='customer-management' element={<CustomerManagement />} />
           <Route path='all-customer' element={<CustomerManagement />} />

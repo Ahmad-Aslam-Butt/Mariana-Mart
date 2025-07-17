@@ -13,7 +13,7 @@ export const AllProducts = () => {
   ]
 
   return (
-    <div className='py-4 px-2'>
+    <div className='p-4'>
       <h1 className='text-2xl font-bold pb-6'>Product Management</h1>
 
       <div className='py-2'>
@@ -59,7 +59,7 @@ export const AllProducts = () => {
 
                   <span className='flex gap-1 items-center'>
                     <button className='hover:text-[#DB4444] px-2 py-1 rounded-[4px] text-sm'>Edit</button>
-                    <button className='border box-border border-[#DB4444] px-2 py-1 w-16 h-8 rounded-[4px] text-sm bg-[#DB4444] hover:bg-transparent text-white hover:text-[#DB4444]'>Delete</button>
+                    <button className='border box-border border-red-800 px-2 py-1 w-16 h-8 rounded-[4px] text-sm bg-red-800 hover:bg-transparent text-white hover:text-red-800'>Delete</button>
                   </span>
                 </div>
               )
