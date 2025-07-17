@@ -77,7 +77,7 @@ export const AddProduct = () => {
                     </div>
 
                     <div className='col-span-1 gap-1'>
-                        <label>Image</label>
+                        {/* <label>Image</label> */}
                         <input
                             type="file"
                             onChange={(e) => setProduct({ ...product, img: e.target.files[0] })}
