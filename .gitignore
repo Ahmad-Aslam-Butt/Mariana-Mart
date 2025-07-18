@@ -1,5 +1,5 @@
 # dependencies
-/*/node_modules
+
 /*/node_modules
 /.pnp
 .pnp.js
@@ -27,7 +27,7 @@ pnpm-debug.log*
 # IDEs
 .idea/
 *.suo
-.ntvs
+*.ntvs*
 *.njsproj
 *.sln
 
