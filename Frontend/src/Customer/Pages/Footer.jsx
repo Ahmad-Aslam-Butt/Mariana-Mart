@@ -59,10 +59,10 @@ export const Footer = () => {
                     <p className='text-xl font-medium mb-5'>Download App</p>
                     <p className='text-sm'>Save $3 with App New User Only</p>
                     <div className='flex flex-row gap-1'>
-                        <img src="../../public/qrcode.png" alt="qrcode.png" className='w-24' />
+                        <img src="/qrcode.png" alt="qrcode.png" className='w-24' />
                         <div className='flex-col'> 
-                        <img src="../../public/google.png" alt="google.png" className='w-40 mb-1' />
-                        <img src="../../public/AppStore.png" alt="AppStore.png" className='w-40'/>
+                        <img src="/google.png" alt="google.png" className='w-40 mb-1' />
+                        <img src="/AppStore.png" alt="AppStore.png" className='w-40'/>
                         </div>
                     </div>
                     
