@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Banner } from '../Components/Banner';
 import { Product } from '../Components/Product';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
@@ -8,8 +8,15 @@ import { CateogyWise } from '../Components/CateogyWise';
 import { TbTruckDelivery } from "react-icons/tb";
 import { MdOutlineHeadphones } from "react-icons/md";
 import { IoShieldCheckmarkOutline } from "react-icons/io5";
+import { FaMale } from "react-icons/fa";
+import { FaFemale } from "react-icons/fa";
+import { PiBabyDuotone } from "react-icons/pi";
+import { AiOutlineMedicineBox } from "react-icons/ai";
+import { GrRun } from "react-icons/gr";
 
 export const CustomerDashboard = () => {
+  const nevigate = useNavigate()
+
   const categoryArr = [
     "Woman’s Fashion", "Man’s Fashion", "Electronic", "Home & Lifestyle",
     "Medicine", "Sports & Outdoor", "Baby’s & Toys", "Groceries & Pets", "Health & Beauty"
@@ -17,16 +24,16 @@ export const CustomerDashboard = () => {
 
   //  Flash Sales
   const productDetail = [
-    { name: "HAVIT HV-G92 Gamepad", discount: "20%", image: "/product.png", disprice: "$18", price: "$30", rating: <FaStar /> },
-    { name: "HAVIT HV-G92 Gamepad", discount: "20%", image: "/product.png", disprice: "$18", price: "$30", rating: <FaStar /> },
-    { name: "HAVIT HV-G92 Gamepad", discount: "20%", image: "/product.png", disprice: "$18", price: "$30", rating: <FaStar /> },
-    { name: " HV-G92 Gamepad", discount: "20%", image: "/product.png", disprice: "$18", price: "$30", rating: <FaStar /> },
-    { name: "HAVIT HV-G92 Gamepad", discount: "20%", image: "/product.png", disprice: "$18", price: "$30", rating: <FaStar /> },
-    { name: "HAVIT HV-G92 Gamepad", discount: "20%", image: "/product.png", disprice: "$18", price: "$30", rating: <FaStar /> },
-    { name: "HAVIT HV-G92 Gamepad", discount: "20%", image: "/product.png", disprice: "$18", price: "$30", rating: <FaStar /> },
-    { name: "HAVIT HV-G92 Gamepad", discount: "20%", image: "/product.png", disprice: "$18", price: "$30", rating: <FaStar /> },
-    { name: "HAVIT HV-", discount: "20%", image: "/product.png", disprice: "$18", price: "$30", rating: <FaStar /> },
-    { name: "HAVIT  Gamepad", discount: "20%", image: "/product.png", disprice: "$18", price: "$30", rating: <FaStar /> }
+    { id: "1", name: "HAVIT HV-G92 Gamepad", discount: "20%", image: "/product.png", disprice: "$18", price: "$30", rating: <FaStar /> },
+    { id: "2", name: "Logitech G F310", discount: "15%", image: "/product.png", disprice: "$25", price: "$35", rating: <FaStar /> },
+    { id: "3", name: "Sony DualShock 4", discount: "10%", image: "/product.png", disprice: "$40", price: "$45", rating: <FaStar /> },
+    { id: "4", name: "Xbox Controller", discount: "25%", image: "/product.png", disprice: "$45", price: "$60", rating: <FaStar /> },
+    { id: "5", name: "Razer Wolverine V2", discount: "30%", image: "/product.png", disprice: "$70", price: "$100", rating: <FaStar /> },
+    { id: "6", name: "HAVIT HV-G92 Gamepad", discount: "20%", image: "/product.png", disprice: "$18", price: "$30", rating: <FaStar /> },
+    { id: "7", name: "Logitech G F310", discount: "15%", image: "/product.png", disprice: "$25", price: "$35", rating: <FaStar /> },
+    { id: "8", name: "Sony DualShock 4", discount: "10%", image: "/product.png", disprice: "$40", price: "$45", rating: <FaStar /> },
+    { id: "9", name: "Xbox Controller", discount: "25%", image: "/product.png", disprice: "$45", price: "$60", rating: <FaStar /> },
+    { id: "10", name: "Razer Wolverine V2", discount: "30%", image: "/product.png", disprice: "$70", price: "$100", rating: <FaStar /> }
   ];
 
   const visibleCount = 5;
@@ -55,18 +62,16 @@ export const CustomerDashboard = () => {
 
   //  Category 
   const iconDetail = [
-    { name: "LCD", image: "/lcd.png" },
-    { name: "Mobile", image: "/mobile.png" },
-    { name: "LCD", image: "/lcd.png" },
-    { name: "Mobile", image: "/mobile.png" },
-    { name: "LCD", image: "/lcd.png" },
-    { name: "Mobile", image: "/mobile.png" },
-    { name: "LCD", image: "/lcd.png" },
-    { name: "Mobile", image: "/mobile.png" },
-    { name: "LCD", image: "/lcd.png" },
-    { name: "Mobile", image: "/mobile.png" },
-    { name: "LCD", image: "/lcd.png" },
-    { name: "Mobile", image: "/mobile.png" }
+    { name: "Men's Fashion", image: <FaMale size={32} /> },
+    { name: "Women's Fashion", image: <FaFemale size={32} /> },
+    { name: "Babies & Toys", image: <PiBabyDuotone size={32} /> },
+    { name: "Medicine", image: <AiOutlineMedicineBox size={32} /> },
+    { name: "Sports & Outdoor", image: <GrRun size={32} /> },
+    { name: "Men's Fashion", image: <FaMale size={32} /> },
+    { name: "Women's Fashion", image: <FaFemale size={32} /> },
+    { name: "Babies & Toys", image: <PiBabyDuotone size={32} /> },
+    { name: "Medicine", image: <AiOutlineMedicineBox size={32} /> },
+    { name: "Sports & Outdoor", image: <GrRun size={32} /> },
   ];
 
   const showCount = 6;
@@ -92,6 +97,11 @@ export const CustomerDashboard = () => {
 
   const visibleCategories = iconDetail.slice(catIndex, catIndex + showCount);
 
+
+  const handleProductClick = (product) => {
+    nevigate(`/customer/singleproduct/${product.id}`)
+    console.log('working')
+  }
   return (
     <div className="mx-24">
 
@@ -134,15 +144,11 @@ export const CustomerDashboard = () => {
         {/* Custom Carousel */}
         <div className="flex gap-14 overflow-hidden">
           {visibleProducts.map((product, i) => (
-            <Product
-              key={i + startIndex}
-              name={product.name}
-              discount={product.discount}
-              image={product.image}
-              price={product.price}
-              disprice={product.disprice}
-              rating={product.rating}
-            />
+            <div key={i} onClick={() => handleProductClick(product)}>
+              <Product
+                product={product}
+              />
+            </div>
           ))}
         </div>
 
@@ -180,7 +186,7 @@ export const CustomerDashboard = () => {
         <div className="flex gap-14 overflow-hidden">
           {visibleCategories.map((icon, i) => (
             <CateogyWise
-              key={i + catIndex}
+              key={`${catIndex}-${i}`} 
               name={icon.name}
               image={icon.image}
             />
@@ -208,17 +214,12 @@ export const CustomerDashboard = () => {
         </div>
         <div className="flex gap-14 overflow-hidden">
           {productDetail.slice(0, visibleCount).map((product, i) => (
-            <Product
-              key={i + startIndex}
-              name={product.name}
-              discount={product.discount}
-              image={product.image}
-              price={product.price}
-              disprice={product.disprice}
-              rating={product.rating}
-            />
+            <div key={product.id || i + startIndex} onClick={() => handleProductClick(product)}>
+              <Product product={product} />
+            </div>
           ))}
         </div>
+
       </div>
 
       {/* Banner */}
@@ -250,28 +251,21 @@ export const CustomerDashboard = () => {
 
         {/* Custom Carousel */}
         <div className="flex gap-14 overflow-hidden">
-          {visibleProducts.map((product, i) => (
-            <Product
-              key={i + startIndex}
-              name={product.name}
-              discount={product.discount}
-              image={product.image}
-              price={product.price}
-              disprice={product.disprice}
-              rating={product.rating}
-            />
+          {visibleProducts.map((product, index) => (
+            <div
+              key={product.id || index + startIndex}
+              onClick={() => handleProductClick(product)}
+            >
+              <Product product={product} />
+            </div>
           ))}
         </div>
+
         <div className="flex gap-14 overflow-hidden">
           {productDetail.slice(0, visibleCount).map((product, i) => (
-            <Product
-              name={product.name}
-              discount={product.discount}
-              image={product.image}
-              price={product.price}
-              disprice={product.disprice}
-              rating={product.rating}
-            />
+            <div key={product.id || i + startIndex} onClick={() => handleProductClick(product)}>
+              <Product product={product} />
+            </div>
           ))}
         </div>
         {/* View All Products Button */}
@@ -283,8 +277,8 @@ export const CustomerDashboard = () => {
       </div>
 
       {/* Feature */}
-      <div class="grid grid-cols-5 grid-rows-4 gap-5 my-20 ">
-        <div class="col-span-3 row-span-4 bg-[#0d0d0d] flex items-center justify-center">
+      <div className="grid grid-cols-5 grid-rows-4 gap-5 my-20 ">
+        <div className="col-span-3 row-span-4 bg-[#0d0d0d] flex items-center justify-center">
           <div className="bg-[url('/game.png')] bg-contain bg-no-repeat bg-center h-96 text-white w-full flex flex-col justify-end p-4">
             <div >
               <p className='text-2xl font-semibold'>PlayStation 5</p>
@@ -293,8 +287,8 @@ export const CustomerDashboard = () => {
             </div>
           </div>
         </div>
-        <div class="col-start-4 col-span-2 row-span-2 bg-[#0d0d0d] flex items-center justify-center">
-          <div class="bg-[url('/women.png')] bg-contain bg-no-repeat  h-48 w-full bg-right text-white flex flex-col justify-end p-4">
+        <div className="col-start-4 col-span-2 row-span-2 bg-[#0d0d0d] flex items-center justify-center">
+          <div className="bg-[url('/women.png')] bg-contain bg-no-repeat  h-48 w-full bg-right text-white flex flex-col justify-end p-4">
             <div >
               <p className='text-2xl font-semibold'>Women’s Collections</p>
               <p className='mr-44 text-sm '>Featured woman collections that give you another vibe.</p>
@@ -302,8 +296,8 @@ export const CustomerDashboard = () => {
             </div>
           </div>
         </div>
-        <div class="col-start-4 row-start-3 row-span-2 bg-[#0d0d0d] flex items-center justify-center">
-          <div class="bg-[url('/speaker.png')] bg-contain bg-no-repeat bg-center h-48 w-full text-white flex flex-col justify-end p-4">
+        <div className="col-start-4 row-start-3 row-span-2 bg-[#0d0d0d] flex items-center justify-center">
+          <div className="bg-[url('/speaker.png')] bg-contain bg-no-repeat bg-center h-48 w-full text-white flex flex-col justify-end p-4">
             <div>
               <p className='text-xl font-semibold'>Speakers</p>
               <p className='text-sm '>Amazon wireless speakers</p>
@@ -312,8 +306,8 @@ export const CustomerDashboard = () => {
           </div>
         </div>
 
-        <div class="col-start-5 row-start-3 row-span-2 bg-[#0d0d0d] flex items-center justify-center">
-          <div class="bg-[url('/gucci.png')] bg-contain bg-no-repeat  bg-center h-48 w-full text-white flex flex-col justify-end p-4">
+        <div className="col-start-5 row-start-3 row-span-2 bg-[#0d0d0d] flex items-center justify-center">
+          <div className="bg-[url('/gucci.png')] bg-contain bg-no-repeat  bg-center h-48 w-full text-white flex flex-col justify-end p-4">
             <div>
               <p className='text-xl font-semibold'>Perfume</p>
               <p className='text-sm '>GUCCI INTENSE OUD EDP</p>
@@ -326,7 +320,7 @@ export const CustomerDashboard = () => {
       {/* information */}
       <div className='flex gap-28 justify-center text-center space-y-2 my-20'>
         <div className='flex flex-col items-center'>
-        <TbTruckDelivery className='size-14 p-2 mb-2 bg-black text-white rounded-full border-[#c1c0c1] border-8' />
+          <TbTruckDelivery className='size-14 p-2 mb-2 bg-black text-white rounded-full border-[#c1c0c1] border-8' />
           <p className='text-lg font-semibold'>FREE AND FAST DELIVERY</p>
           <p className='text-sm'>Free delivery for all orders over $140</p>
         </div>
