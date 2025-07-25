@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { CiImageOn } from "react-icons/ci";
 
 export const AddProduct = () => {
     const initialProduct = {
@@ -30,7 +31,7 @@ export const AddProduct = () => {
         setTagInput('')
         setCategoryInput('')
 
-        if(fileInputRef.current)
+        if (fileInputRef.current)
             fileInputRef.current.value = ''
     }
 
@@ -58,6 +59,10 @@ export const AddProduct = () => {
         }
     }
 
+    const handleDivClick = () => {
+        fileInputRef.current.click()
+    }
+
     return (
         <div className='p-4'>
             <h1 className='text-2xl font-bold pb-8'>Product Management</h1>
@@ -76,13 +81,24 @@ export const AddProduct = () => {
                         />
                     </div>
 
-                    <div className='col-span-1 gap-1'>
+                    <div className='flex justify-center items-center col-span-1 gap-1'>
                         {/* <label>Image</label> */}
-                        <input
-                            type="file"
-                            onChange={(e) => setProduct({ ...product, img: e.target.files[0] })}
-                            ref={fileInputRef}
-                        />
+                        <div
+                            className={`flex justify-center items-center rounded-md w-16 h-16 overflow-hidden object-cover bg-no-repeat bg-contain bg-center ${!product.img && 'border-2'}`}
+                            style={{ backgroundImage: `url(${product.img})` }}
+                            onClick={handleDivClick}
+                        >
+                            <input
+                                type="file"
+                                accept='image/*'
+                                onChange={(e) => setProduct({ ...product, img: e.target.value })}
+                                ref={fileInputRef}
+                                className='hidden'
+                            />
+                            {
+                                !product.img && <CiImageOn size={28} className='opacity-50' />
+                            }
+                        </div>
                     </div>
                 </div>
 
