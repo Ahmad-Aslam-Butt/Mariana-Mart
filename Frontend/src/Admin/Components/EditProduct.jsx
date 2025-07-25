@@ -1,44 +1,26 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 
-export const AddProduct = () => {
-    const initialProduct = {
-        title: '',
-        img: null,
-        description: '',
-        price: 0,
-        qty: 1,
-        category: [],
-        tags: []
-    }
+export const EditProduct = ({ setIsOpen, productItem }) => {
 
     const fileInputRef = useRef(null)
+    const [product, setProduct] = useState(productItem)
     const [categoryInput, setCategoryInput] = useState('')
     const [tagInput, setTagInput] = useState('')
-    const [product, setProduct] = useState(initialProduct)
 
-    // useEffect(() => {
-    //     console.log(product)
-    // }, [product])
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
+        // try {
+        //     const data = await axios.push('localhost:8000/')
+        // } catch (error) {
+        //     console.log({'Error': error})
+        // }
 
-        // submit to the backend here
         console.log(product)
-
-        setProduct(initialProduct)
-        setTagInput('')
-        setCategoryInput('')
-
-        if(fileInputRef.current)
-            fileInputRef.current.value = ''
+        setIsOpen(false)
     }
 
-    const handleDelete = (itemToRemove, name) => {
-        setProduct((prev) => ({
-            ...prev,
-            [name]: prev[name].filter(item => item !== itemToRemove)
-        }))
+    const handleDivClick = () => {
+        fileInputRef.current.click()
     }
 
     const handleKeyDown = (e) => {
@@ -58,13 +40,22 @@ export const AddProduct = () => {
         }
     }
 
+    const handleDelete = (itemToRemove, name) => {
+        setProduct((prev) => ({
+            ...prev,
+            [name]: prev[name].filter(item => item !== itemToRemove)
+        }))
+    }
+
     return (
         <div className='p-4'>
-            <h1 className='text-2xl font-bold pb-8'>Product Management</h1>
+            <h1 className='text-2xl font-bold'>Edit Product</h1>
             {/* <div>AddProduct</div> */}
 
-            <form onSubmit={handleSubmit} action="submit" className='flex flex-col '>
+            <form onSubmit={handleSubmit} action="submit" className='flex flex-col mt-4'>
                 <div className='grid grid-cols-3 gap-2'>
+
+                    {/* Title */}
                     <div className='col-span-2 flex flex-col gap-1'>
                         <label className='text-lg font-medium'>Product Title</label>
                         <input
@@ -76,16 +67,27 @@ export const AddProduct = () => {
                         />
                     </div>
 
-                    <div className='col-span-1 gap-1'>
+                    {/* Image */}
+                    <div
+                        className='col-span-1 flex justify-center items-center gap-1'
+                    >
                         {/* <label>Image</label> */}
-                        <input
-                            type="file"
-                            onChange={(e) => setProduct({ ...product, img: e.target.files[0] })}
-                            ref={fileInputRef}
-                        />
+                        <div
+                        className='w-20 h-auto aspect-square object-cover bg-cover bg-center'
+                        style={{ backgroundImage: `url(${product.img})` }}
+                        onClick={handleDivClick}
+                        >
+                            <input
+                                className='hidden'
+                                type="file"
+                                onChange={(e) => setProduct({ ...product, img: e.target.files[0] })}
+                                ref={fileInputRef}
+                            />
+                        </div>
                     </div>
                 </div>
 
+                {/* Description */}
                 <div className='flex flex-col mt-3 gap-1'>
                     <label className='text-lg font-medium'>Description</label>
                     <textarea
@@ -96,8 +98,10 @@ export const AddProduct = () => {
                     />
                 </div>
 
-                <div className='grid grid-cols-4 gap-2 mt-3'>
-                    <div className='col-span-2 flex flex-col gap-1'>
+                <div className='grid grid-cols-2 gap-2 mt-3'>
+
+                    {/* Price */}
+                    <div className='col-span-1 flex flex-col gap-1'>
                         <label className='text-lg font-medium'>Price</label>
                         <input
                             type="number"
@@ -106,7 +110,9 @@ export const AddProduct = () => {
                             value={product.price}
                         />
                     </div>
-                    <div className='col-span-2 flex flex-col gap-1'>
+
+                    {/* Qty */}
+                    <div className='col-span-1 flex flex-col gap-1'>
                         <label className='text-lg font-medium'>Quantity</label>
                         <input
                             type="number"
@@ -117,8 +123,9 @@ export const AddProduct = () => {
                     </div>
                 </div>
 
-                <div className='grid grid-cols-4 gap-2'>
-                    <div className='flex flex-col col-span-2 mt-3 gap-1'>
+                <div className='grid grid-cols-2 gap-2'>
+                    {/* Category */}
+                    <div className='flex flex-col col-span-1 mt-3 gap-1'>
                         <label className='text-lg font-medium'>Category</label>
                         <input
                             type="text"
@@ -128,7 +135,7 @@ export const AddProduct = () => {
                             onKeyDown={handleKeyDown}
                             name='category'
                         />
-                        <div className={`flex gap-1 mt-2 ${product.category.length === 0 ? 'hidden' : 'block'}`}>
+                        <div className={`flex flex-wrap gap-1 mt-2 ${product.category.length === 0 ? 'hidden' : 'block'}`}>
                             {
                                 product.category.map((item, index) => {
                                     return (
@@ -141,7 +148,8 @@ export const AddProduct = () => {
                         </div>
                     </div>
 
-                    <div className='flex flex-col col-span-2 mt-3 gap-1'>
+                    {/* Tags */}
+                    <div className='flex flex-col col-span-1 mt-3 gap-1'>
                         <label className='text-lg font-medium'>Tags</label>
                         <input
                             type="text"
@@ -151,7 +159,7 @@ export const AddProduct = () => {
                             onKeyDown={handleKeyDown}
                             name='tags'
                         />
-                        <div className={`flex gap-1 mt-2 ${product.tags.length === 0 ? 'hidden' : 'block'}`}>
+                        <div className={`flex flex-wrap gap-1 mt-2 ${product.tags.length === 0 ? 'hidden' : 'block'}`}>
                             {
                                 product.tags.map((item, index) => {
                                     return (
@@ -165,10 +173,10 @@ export const AddProduct = () => {
                     </div>
                 </div>
 
-                <div className='flex flex-row gap-1 mt-6'>
-                    <button type='reset' className='border-2 border-[#DB4444] rounded-md px-4 py-2 text-xs text-[#DB4444] hover:text-white hover:bg-[#DB4444]'>Cancel</button>
+                {/* Button */}
+                <div className='flex flex-row justify-end gap-1 mt-6'>
+                    <button onClick={() => setIsOpen(false)} type='reset' className='border-2 border-[#DB4444] rounded-md px-4 py-2 text-xs text-[#DB4444] hover:text-white hover:bg-[#DB4444]'>Cancel</button>
                     <button type='submit' className='border-2 border-[#DB4444] rounded-md px-4 py-2 text-xs text-white hover:text-[#DB4444] bg-[#DB4444] hover:bg-white'>Save</button>
-                    <button type='submit' className='border-2 border-[#DB4444] rounded-md px-4 py-2 text-xs text-white hover:text-[#DB4444] bg-[#DB4444] hover:bg-white'>Save & Add New</button>
                 </div>
             </form>
         </div>
