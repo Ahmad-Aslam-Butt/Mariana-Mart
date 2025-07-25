@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FaStar } from 'react-icons/fa';
+import {Quantity} from '../Components/Quantity'
 
 export const SingleProduct = () => {
   const navigate = useNavigate(); 
@@ -56,6 +57,9 @@ export const SingleProduct = () => {
             <span className="text-green-600 font-bold">{product.disprice}</span>
             <span className="line-through text-gray-500">{product.price}</span>
             <span className="bg-red-100 text-red-600 px-2 py-1 rounded">{product.discount} OFF</span>
+          </div>
+          <div className='mr-96'>
+            <Quantity />
           </div>
       <div className="flex space-x-4">
         <button 
