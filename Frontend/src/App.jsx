@@ -30,7 +30,7 @@ import { ShippingManagement } from './Admin/Pages/ShippingManagement'
 import { DropShippingManagement } from './Admin/Pages/DropShippingManagement'
 import { CouponManagement } from './Admin/Pages/CouponManagement'
 import { Settings } from './Admin/Pages/Settings'
-import { AllProducts } from './Admin/Components/AllProducts'
+import { AllProduct } from './Admin/Components/AllProduct'
 import { AddProduct } from './Admin/Components/AddProduct'
 
 function App() {
@@ -49,7 +49,7 @@ function App() {
           <Route path='customers' element={<Reports />} />
           <Route path='inventory' element={<Reports />} />
           <Route path='product-management' element={<ProductManagement />} />
-          <Route path='all-products' element={<AllProducts />} />
+          <Route path='all-products' element={<AllProduct />} />
           <Route path='add-product' element={<AddProduct />} />
           <Route path='order-management' element={<OrderManagement />} />
           <Route path='all-orders' element={<OrderManagement />} />
