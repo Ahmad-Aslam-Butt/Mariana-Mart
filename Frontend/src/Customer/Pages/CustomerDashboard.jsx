@@ -100,7 +100,6 @@ export const CustomerDashboard = () => {
 
   const handleProductClick = (product) => {
     nevigate(`/customer/singleproduct/${product.id}`)
-    console.log('working')
   }
   return (
     <div className="mx-24">
