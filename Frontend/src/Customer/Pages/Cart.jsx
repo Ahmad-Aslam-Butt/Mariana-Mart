@@ -1,73 +1,123 @@
-import React from 'react';
-import { OrderSummary } from '../Components/OrderSummary';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaStar } from 'react-icons/fa';
-import QuantityCounter from '../Components/QuantityCounter';
+import { QuantityCounter } from "../Components/QuantityCounter";
+import { CiLocationOn } from "react-icons/ci";
+
 
 export const Cart = () => {
   const navigate = useNavigate();
+  const [cartItems, setCartItems] = useState([]);
 
-  // Dummy cart product data
-  // const productDetail = [
-  //   { id: "1", name: "HAVIT HV-G92 Gamepad", image: "/product.png", price: 30, quantity: 1 },
-  //   { id: "2", name: "Logitech G F310", image: "/product.png", price: 35, quantity: 2 },
-  // ];
-const productDetail = [
-    { id: "1", name: "HAVIT HV-G92 Gamepad", discount: "20%", image: "/product.png", disprice: "$18", price: "30", rating: <FaStar />, quantity: 1 },
-    { id: "2", name: "Logitech G F310", discount: "15%", image: "/product.png", disprice: "$25", price: "35", rating: <FaStar /> , quantity: 1  },
-    { id: "3", name: "Sony DualShock 4", discount: "10%", image: "/product.png", disprice: "$40", price: "45", rating: <FaStar /> , quantity: 1  },
-    { id: "4", name: "Xbox Controller", discount: "25%", image: "/product.png", disprice: "$45", price: "60", rating: <FaStar /> , quantity: 1  },
-    { id: "5", name: "Razer Wolverine V2", discount: "30%", image: "/product.png", disprice: "$70", price: "100", rating: <FaStar /> , quantity: 1  },
-    { id: "6", name: "HAVIT HV-G92 Gamepad", discount: "20%", image: "/product.png", disprice: "$18", price: "30", rating: <FaStar /> , quantity: 1  },
-    { id: "7", name: "Logitech G F310", discount: "15%", image: "/product.png", disprice: "$25", price: "35", rating: <FaStar /> , quantity: 1  },
-    { id: "8", name: "Sony DualShock 4", discount: "10%", image: "/product.png", disprice: "$40", price: "45", rating: <FaStar /> , quantity: 1  },
-    { id: "9", name: "Xbox Controller", discount: "25%", image: "/product.png", disprice: "$45", price: "60", rating: <FaStar /> , quantity: 1  },
-    { id: "10", name: "Razer Wolverine V2", discount: "30%", image: "/product.png", disprice: "$70", price: "100", rating: <FaStar /> , quantity: 1  }
-  ];
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem("cartitems")) || [];
+    setCartItems(items);
+  }, []);
+
   const handleCheckout = () => {
     navigate(`/customer/checkout`);
   };
 
-  const getTotal = () => {
-    return productDetail.reduce((total, item) => total + item.price * item.quantity, 0);
+  const getSubTotal = () => {
+    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+  const getCartsTotal = () => {
+    return cartItems.reduce((total, item) => 25 + total + item.price * item.quantity, 0);
   };
 
   return (
     <div>
-      <div className='grid grid-cols-6 mr-8'>
+      <div className="grid grid-cols-6 mr-8">
         {/* Cart Items */}
-        <div className='col-span-4 py-3 px-3 border'>
-          <h1 className='text-2xl font-semibold mb-4'>Shopping Cart</h1>
-          <div className='grid grid-cols-4 text-center font-semibold border-b pb-2'>
+        <div className="col-span-4 py-3 px-3 border">
+          <h1 className="text-2xl font-semibold mb-4">Shopping Cart</h1>
+          <div className="grid grid-cols-4 text-center font-semibold border-b pb-2">
             <p>Product</p>
             <p>Price</p>
             <p>Item</p>
             <p>Total</p>
           </div>
-          {productDetail.map((item) => (
-            <div
-              key={item.id}
-              className='grid grid-cols-4 text-center items-center border-b py-4'
-            >
-              <div className='flex items-center gap-4 justify-center'>
-                <img src={item.image} alt={item.name} className='w-20 h-16 object-cover' />
-                <p>{item.name}</p>
+          {cartItems.map((product, index) => {
+            const setQuantity = (newQty) => {
+              let updatedItems = [...cartItems];
+              if (newQty === 0) {
+                updatedItems.splice(index, 1);
+              } else {
+                updatedItems[index].quantity = newQty;
+              }
+
+              setCartItems(updatedItems);
+              localStorage.setItem("cartitems", JSON.stringify(updatedItems));
+            };
+
+
+            return (
+              <div
+                key={index}
+                className="grid grid-cols-4 text-center items-center border-b py-4"
+              >
+                <div className="flex items-center gap-4 justify-center">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-20 h-16 object-cover"
+                  />
+                  <p>{product.name}</p>
+                </div>
+                <p>${product.price}</p>
+                <div className="flex justify-center">
+                  <QuantityCounter
+                    quantity={product.quantity}
+                    setQuantity={setQuantity}
+                  />
+                </div>
+                <p>${(product.price * product.quantity).toFixed(2)}</p>
               </div>
-              <p>${item.price}</p>
-              <p><QuantityCounter /></p>
-              <p>${item.price * item.quantity}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Order Summary */}
-        <div className='col-span-2 h-fit border px-7 py-7 sticky top-2'>
-          <OrderSummary />
-          <div className='mt-4'>
-            <p className='text-lg font-semibold mb-2'>Cart Total: ${getTotal()}</p>
+        <div className="col-span-2 h-fit border px-7 py-7 sticky top-2">
+          <div>
+            {/* location */}
+            <h2 className=' font-extralight mb-3'>
+              Location
+            </h2>
+            <div className='flex gap-2 cursor-pointer mb-3'>
+              <CiLocationOn className=' size-5  ' />
+              <p className='text-sm'>Add Shipping Address</p>
+            </div>
+
+            {/* Subtotal */}
+            <h1 className='text-xl font-semibold mb-3'>Order Summary</h1>
+            <div className='flex justify-between  mb-1 font-light '>
+              <h3>Subtotal (0 items)</h3>
+              <p>${getSubTotal()}</p>
+            </div>
+            <div className='flex justify-between mb-8 font-light'>
+              <h3>Shipping Fee</h3>
+              <p> $25</p>
+
+            </div>
+
+            {/* cupon */}
+            <div className='mb-6 '>
+              <input className='border rounded px-8 py-1' type="text" placeholder='Enter Cupon Code' />
+              <button className='border rounded px-10 py-1 ml-2.5 bg-gray-800 hover:bg-black text-white '>Apply</button>
+            </div>
+
+
+          </div>
+          <div className="mt-4">
+            <div className="flex justify-between mb-6">
+              <p className="text-lg font-semibold mb-2">Cart Total</p>
+              <p className="text-lg font-semibold mb-2 text-red-500">
+                {getCartsTotal()}
+              </p>
+            </div>
             <button
               onClick={handleCheckout}
-              className='w-full py-2 bg-red-500 hover:bg-red-600 rounded text-white'
+              className="w-full py-2 bg-red-500 hover:bg-red-600 rounded text-white"
             >
               PROCEED TO CHECKOUT
             </button>
