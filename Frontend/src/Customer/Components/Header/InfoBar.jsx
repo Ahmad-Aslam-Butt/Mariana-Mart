@@ -1,14 +1,26 @@
-import React from 'react'
-import { RiArrowDropDownLine } from "react-icons/ri";
+import React from 'react';
+import { RiArrowDropDownLine } from 'react-icons/ri';
 
 export const InfoBar = () => {
-    return (
-        <div>
-            <div className='flex justify-around text-white bg-black text- py-2'>
-                <p className='text-sm'>Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%! <a className='cursor-pointer px-2 hover:border border-b-[.1px]' href="#">ShopNow</a> </p>
-                <p className='text-sm flex'>English<RiArrowDropDownLine className='size-5' /></p>
-            </div>
+  return (
+    <div className="bg-black text-white text-sm">
+      <div className="flex flex-col md:flex-row md:justify-around items-center px-4 py-2 space-y-1 md:space-y-0">
 
+        {/* Sale Message */}
+        <p className="text-center">
+          Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%! 
+          <a href="#" className="underline hover:text-red-400 px-2">
+            Shop Now
+          </a>
+        </p>
+
+        {/* Language Selector */}
+        <div className="flex items-center justify-center cursor-pointer">
+          <span>English</span>
+          <RiArrowDropDownLine className="text-xl" />
         </div>
-    )
-}
+
+      </div>
+    </div>
+  );
+};
