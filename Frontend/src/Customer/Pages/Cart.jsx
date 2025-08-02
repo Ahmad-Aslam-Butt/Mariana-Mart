@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { QuantityCounter } from "../Components/QuantityCounter";
 import { CiLocationOn } from "react-icons/ci";
-
 
 export const Cart = () => {
   const navigate = useNavigate();
@@ -23,19 +22,34 @@ export const Cart = () => {
   const getCartsTotal = () => {
     return cartItems.reduce((total, item) => 25 + total + item.price * item.quantity, 0);
   };
+  const getTotal = () => {
+   return cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  };
 
   return (
-    <div>
-      <div className="grid grid-cols-6 mr-8">
+    <div className="p-4 md:p-8">
+      <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
+
         {/* Cart Items */}
-        <div className="col-span-4 py-3 px-3 border">
-          <h1 className="text-2xl font-semibold mb-4">Shopping Cart</h1>
-          <div className="grid grid-cols-4 text-center font-semibold border-b pb-2">
+        <div className="md:col-span-4 border rounded p-4">
+          <div className='flex flex-col md:flex-row justify-between pb-4 items-center'>
+            <h1 className="text-2xl font-semibold mb-4 md:mb-0">Shopping Cart</h1>
+            <Link to="/Customer">
+              <button className='border border-red-500 px-4 py-2 text-red-500 hover:bg-red-500 hover:text-white rounded-full w-full md:w-auto'>
+                More Shopping
+              </button>
+            </Link>
+          </div>
+
+          {/* Table header */}
+          <div className="hidden md:grid grid-cols-4 text-center font-semibold border-b pb-2">
             <p>Product</p>
             <p>Price</p>
             <p>Item</p>
             <p>Total</p>
           </div>
+
+          {/* Cart Items List */}
           {cartItems.map((product, index) => {
             const setQuantity = (newQty) => {
               let updatedItems = [...cartItems];
@@ -49,27 +63,33 @@ export const Cart = () => {
               localStorage.setItem("cartitems", JSON.stringify(updatedItems));
             };
 
-
             return (
               <div
                 key={index}
-                className="grid grid-cols-4 text-center items-center border-b py-4"
+                className="border-b py-4 flex flex-col md:grid md:grid-cols-4 items-center md:text-center"
               >
-                <div className="flex items-center gap-4 justify-center">
+                {/* Product info */}
+                <div className="flex items-center gap-4 mb-4 md:mb-0 justify-center">
                   <img
                     src={product.image}
                     alt={product.name}
                     className="w-20 h-16 object-cover"
                   />
-                  <p>{product.name}</p>
+                  <p className="text-center md:text-left">{product.name}</p>
                 </div>
-                <p>${product.price}</p>
-                <div className="flex justify-center">
+
+                {/* Price */}
+                <p className="mb-4 md:mb-0">${product.price}</p>
+
+                {/* Quantity counter */}
+                <div className="flex justify-center mb-4 md:mb-0">
                   <QuantityCounter
                     quantity={product.quantity}
                     setQuantity={setQuantity}
                   />
                 </div>
+
+                {/* Total */}
                 <p>${(product.price * product.quantity).toFixed(2)}</p>
               </div>
             );
@@ -77,43 +97,43 @@ export const Cart = () => {
         </div>
 
         {/* Order Summary */}
-        <div className="col-span-2 h-fit border px-7 py-7 sticky top-2">
+        <div className="md:col-span-2 border rounded p-6 sticky top-2 bg-white">
           <div>
-            {/* location */}
-            <h2 className=' font-extralight mb-3'>
-              Location
-            </h2>
-            <div className='flex gap-2 cursor-pointer mb-3'>
-              <CiLocationOn className=' size-5  ' />
+            {/* Location */}
+            <h2 className='font-extralight mb-3'>Location</h2>
+            <div className='flex gap-2 cursor-pointer mb-3 items-center'>
+              <CiLocationOn className='text-xl' />
               <p className='text-sm'>Add Shipping Address</p>
             </div>
 
             {/* Subtotal */}
             <h1 className='text-xl font-semibold mb-3'>Order Summary</h1>
-            <div className='flex justify-between  mb-1 font-light '>
-              <h3>Subtotal (0 items)</h3>
-              <p>${getSubTotal()}</p>
+            <div className='flex justify-between mb-1 font-light'>
+              <h3>Subtotal ({getTotal()} items)</h3>
+              <p>${getSubTotal().toFixed(2)}</p>
             </div>
             <div className='flex justify-between mb-8 font-light'>
               <h3>Shipping Fee</h3>
-              <p> $25</p>
-
+              <p>$25</p>
             </div>
 
-            {/* cupon */}
-            <div className='mb-6 '>
-              <input className='border rounded px-8 py-1' type="text" placeholder='Enter Cupon Code' />
-              <button className='border rounded px-10 py-1 ml-2.5 bg-gray-800 hover:bg-black text-white '>Apply</button>
+            {/* Coupon */}
+            <div className='mb-6 flex flex-col md:flex-row gap-2'>
+              <input
+                className='border rounded px-4 py-2 flex-grow'
+                type="text"
+                placeholder='Enter Coupon Code'
+              />
+              <button className='border rounded px-6 py-2 bg-gray-800 hover:bg-black text-white'>
+                Apply
+              </button>
             </div>
-
-
           </div>
+
           <div className="mt-4">
             <div className="flex justify-between mb-6">
               <p className="text-lg font-semibold mb-2">Cart Total</p>
-              <p className="text-lg font-semibold mb-2 text-red-500">
-                {getCartsTotal()}
-              </p>
+              <p className="text-lg font-semibold mb-2 text-red-500">${getCartsTotal().toFixed(2)}</p>
             </div>
             <button
               onClick={handleCheckout}
