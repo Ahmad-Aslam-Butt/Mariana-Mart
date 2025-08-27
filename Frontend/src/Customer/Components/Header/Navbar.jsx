@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { CiSearch, CiHeart } from "react-icons/ci";
 import { BsCart2 } from "react-icons/bs";
 import { Link, useNavigate } from 'react-router-dom';
+import { GiHamburgerMenu } from "react-icons/gi";
 
 export const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -11,7 +12,6 @@ export const Navbar = () => {
     <nav className="border-b-2 px-[5vw] py-4">
       <div className="flex justify-between items-center">
 
-        {/* Company Logo */}
         <Link to="dashboard" className='text-xl font-bold'>
           Mariana Mart
         </Link>
@@ -20,21 +20,8 @@ export const Navbar = () => {
         <button
           className="md:hidden text-gray-700 focus:outline-none"
           onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
         >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            {menuOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
+          <GiHamburgerMenu />
         </button>
 
         {/* Menu & Search + Icons - Desktop */}
@@ -45,7 +32,7 @@ export const Navbar = () => {
             <Link to="dashboard" className="hover:underline">Home</Link>
             <Link to="contact" className="hover:underline">Contact</Link>
             <Link to="about" className="hover:underline">About</Link>
-            <Link to="/sign-up" className="hover:underline">Sign Up</Link>
+            <Link to="/login" className="hover:underline">Login</Link>
           </div>
 
           {/* Search + Icons */}
@@ -65,8 +52,8 @@ export const Navbar = () => {
             <CiHeart className='text-gray-900 text-2xl cursor-pointer' />
 
             <div className='flex'>
-            {/* Cart */}
-            <BsCart2 onClick={() => navigate(`/customer/cart`) } className='text-gray-900 text-2xl cursor-pointer' />
+              {/* Cart */}
+              <BsCart2 onClick={() => navigate(`/customer/cart`)} className='text-gray-900 text-2xl cursor-pointer' />
             </div>
 
           </div>
@@ -96,7 +83,7 @@ export const Navbar = () => {
           {/* Wishlist + Cart Icons */}
           <div className="flex gap-6 justify-center">
             <CiHeart className='text-gray-900 text-3xl cursor-pointer' />
-            <BsCart2 onClick={() => navigate(`/customer/cart`) } className='text-gray-900 text-3xl cursor-pointer' />
+            <BsCart2 onClick={() => navigate(`/customer/cart`)} className='text-gray-900 text-3xl cursor-pointer' />
           </div>
         </div>
       )}
