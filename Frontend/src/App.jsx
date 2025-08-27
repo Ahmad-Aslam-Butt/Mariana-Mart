@@ -32,13 +32,23 @@ import { CouponManagement } from './Admin/Pages/CouponManagement'
 import { Settings } from './Admin/Pages/Settings'
 import { AllProduct } from './Admin/Components/AllProduct'
 import { AddProduct } from './Admin/Components/AddProduct'
+import { AdminSignup } from './Admin/Pages/AdminSignup'
+import { CustomerSignup } from './Customer/Pages/CustomerSignup'
+import { Login } from './Login'
 
 function App() {
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Dashboard />} />
+        <Route path='/' element={<Customer_Home />}>
+          <Route index element={<CustomerDashboard />} />
+        </Route>
+
+        <Route path='/login' element={<Login />} />
+        <Route path='adminsignup' element={<AdminSignup />} />
+        <Route path='customersignup' element={<CustomerSignup />} />
+
         {/* Admin Routes */}
         <Route path='/admin' element={<Admin_Home />}>
           <Route index element={<Navigate to='dashboard' replace />} />
@@ -71,24 +81,25 @@ function App() {
         </Route>
 
         {/* Customer Routes */}
-        <Route path='/customer' element={<Customer_Home />}>
-          <Route index element={<Navigate to='dashboard' replace />} />
-          <Route path='dashboard' element={<CustomerDashboard />} />
-          <Route path='about' element={<About />} />
-          <Route path='accountdetail' element={<AccountDetail />} />
-          <Route path='allproducts' element={<AllProducts />} />
-          <Route path='cart' element={<Cart />} />
-          <Route path='category' element={<Category />} />
-          <Route path='checkout' element={<Checkout />} />
-          <Route path='coupons' element={<Coupons />} />
-          <Route path='filterproduct' element={<FilterProduct />} />
-          <Route path='orders' element={<Orders />} />
-          <Route path='ordertracking' element={<OrderTracking />} />
-          <Route path='payment' element={<Payment />} />
-          <Route path='paymentsettings' element={<PaymentSettings />} />
+        <Route path="/customer" element={<Customer_Home />}>
+          <Route index element={<Navigate to="dashboard" replace />} />
+          <Route path="dashboard" element={<CustomerDashboard />} />
+          <Route path="about" element={<About />} />
+          <Route path="accountdetail" element={<AccountDetail />} />
+          <Route path="allproducts" element={<AllProducts />} />
+          <Route path="cart" element={<Cart />} />
+          <Route path="checkout" element={<Checkout />} />
+          <Route path="coupons" element={<Coupons />} />
+          <Route path="filterproduct" element={<FilterProduct />} />
+          <Route path="orders" element={<Orders />} />
+          <Route path="ordertracking" element={<OrderTracking />} />
+          <Route path="payment" element={<Payment />} />
+          <Route path="paymentsettings" element={<PaymentSettings />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="category/:categoryName" element={<Category />} />
           <Route path="singleproduct/:id" element={<SingleProduct />} />
-          <Route path='contact' element={<Contact />} />
         </Route>
+
 
         {/* Drop shipping Routes */}
         <Route path='/dropship' element={<Drop_Ship_Home />}>
