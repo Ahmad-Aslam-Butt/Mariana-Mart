@@ -26,20 +26,27 @@ export const SingleProduct = () => {
     return userObj
   }
 
-  const handleAddToCart = (e) => {
-    e.preventDefault();
-    const user = getUser()
-    const data = { "id": user.id, 'prodId': id, "qty": quantities }
-    
-    axios.post("http://localhost:3001/cart", data)
-      .then((result) => {
-        console.log("Success:", result.data);
-      })
-      .catch((err) => {
-        console.error("Error:", err);
-      });
+const handleAddToCart = (e) => {
+  e.preventDefault();
+  const user = getUser();
+
+  if (!user) {  
+    navigate('/login');
+    return;
+  }
+
+  const data = { "id": user.id, 'prodId': id, "qty": quantities };
+
+  axios.post("http://localhost:3001/cart", data)
+    .then((result) => {
+      console.log("Success:", result.data);
       navigate('/customer/cart');
-  };
+    })
+    .catch((err) => {
+      console.error("Error:", err);
+    });
+};
+
 
   const handleBuy = () => {
     navigate(`/customer/checkout`);

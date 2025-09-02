@@ -9,13 +9,6 @@ export const EditProduct = ({ setIsOpen, productItem }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        // try {
-        //     const data = await axios.push('localhost:8000/')
-        // } catch (error) {
-        //     console.log({'Error': error})
-        // }
-
-        console.log(product)
         setIsOpen(false)
     }
 

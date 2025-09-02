@@ -1,11 +1,9 @@
 const mongoose = require("mongoose");
 
 const purchaseSchema = new mongoose.Schema({
-  customId: { type: String },
-  purchId: { type: String },
-  purchqty: { type: Number },
-  prodId: { type: String },
-  prodName: { type: String },
-  prodprice: { type: Number },
+  userid: { type: String } , 
+  products: { type: Array } ,
+  formData: { type: Object } ,
+  city: { type: String } ,
 });
 module.exports = mongoose.model("purchase", purchaseSchema);
