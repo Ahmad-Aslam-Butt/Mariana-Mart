@@ -7,7 +7,6 @@ import axios from "axios";
 export const Cart = () => {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
-  // const [quantity, setQuantity] = useState([]);
 
   useEffect(() => {
     const data = localStorage.getItem("user")
@@ -15,7 +14,6 @@ export const Cart = () => {
     axios.get(`http://localhost:3001/getCart/${user.id}`)
       .then((res) => {
         setCartItems(res.data || []);
-        // console.log(res.data)
       })
       .catch((err) => console.log(err));
   }, []);
@@ -42,6 +40,28 @@ export const Cart = () => {
     return cartItems.reduce((sum, item) => sum + (item.qty || 0), 0);
   };
 
+  const handleRemove = async (item) => {
+    try {
+      const data = localStorage.getItem("user");
+      const user = JSON.parse(data);
+
+      const res = await axios.get(
+        `http://localhost:3001/removeCartItem?userId=${user.id}&itemId=${item._id}`
+      );
+
+      if (res.status === 200) {
+        setCartItems((prevItems) =>
+          prevItems.filter((i) => i._id !== item._id)
+        );
+        console.log("Item removed from cart");
+      } else {
+        console.error("Failed to remove item:", res.data);
+      }
+    } catch (err) {
+      console.error("Error removing item from cart:", err);
+    }
+  };
+
   return (
     <div className="p-4 md:p-8">
       <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
@@ -59,11 +79,12 @@ export const Cart = () => {
           </div>
 
           {/* Table header */}
-          <div className="hidden md:grid grid-cols-4 text-center font-semibold border-b pb-2">
+          <div className="hidden md:grid grid-cols-5 text-center font-semibold border-b pb-2">
             <p>Product</p>
             <p>Price</p>
             <p>Item</p>
             <p>Total</p>
+            <p>Remove</p>
           </div>
 
           {/* Product info */}
@@ -71,7 +92,7 @@ export const Cart = () => {
             cartItems.map((item, index) => (
               <div
                 key={index}
-                className="border-b py-4 flex flex-col md:grid md:grid-cols-4 items-center md:text-center"
+                className="border-b py-4 flex flex-col md:grid md:grid-cols-5 items-center md:text-center"
               >
                 {/* Product image + name */}
                 <div className="flex items-center gap-4 mb-4 md:mb-0 justify-center">
@@ -87,11 +108,19 @@ export const Cart = () => {
                 <p>${item.price ? item.price.toFixed(2) : "0.00"}</p>
                 {/* Quantity counter */}
                 <div className="flex justify-center mb-4 md:mb-0">
-                  <QuantityCounter  item={item} setCartItems={setCartItems} />                  
+                  <QuantityCounter item={item} setCartItems={setCartItems} />
                 </div>
 
                 {/* Total for this product */}
                 <p>${((item.price || 0) * (item.qty || 0)).toFixed(2)}</p>
+
+                {/* Remove */}
+                <button
+                  onClick={() => handleRemove(item)}
+                  className="text-red-500 hover:text-red-700"
+                >
+                  Remove
+                </button>
               </div>
             ))
           ) : (

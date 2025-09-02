@@ -15,6 +15,7 @@ export const CustomerDashboard = () => {
   const [startIndex, setStartIndex] = useState(0);
   const [visibleCount, setVisibleCount] = useState(5);
   const [catIndex, setCatIndex] = useState(0);
+  const [sellingProduct, setSellingProduct] = useState([]);
 
   const categorys = [
     "Woman’s Fashion",
@@ -32,6 +33,11 @@ export const CustomerDashboard = () => {
   useEffect(() => {
     axios.get("http://localhost:3001/allproducts")
       .then(res => setProductDetail(res.data))
+      .catch(err => console.log(err));
+  }, []);
+  useEffect(() => {
+    axios.get("http://localhost:3001/purchase")
+      .then(res => setSellingProduct(res.data))
       .catch(err => console.log(err));
   }, []);
 
@@ -225,8 +231,10 @@ export const CustomerDashboard = () => {
         </div>
 
         <div className="flex justify-between overflow-hidden">
-          {productDetail.slice(0, visibleCount).map((product, i) => (
+          {sellingProduct.slice(0, visibleCount).map((product, i) => (
             <div key={product._id || product.id || i} onClick={() => handleProductClick(product)}>
+              {console.log(sellingProduct)}
+              
               <Product product={product} />
             </div>
           ))}
@@ -272,14 +280,14 @@ export const CustomerDashboard = () => {
             </div>
           ))}
         </div>
-
+{/* 
         <div className="flex justify-between overflow-hidden">
           {productDetail.slice(0, visibleCount).map((product, i) => (
             <div key={product.id || i + startIndex} onClick={() => handleProductClick(product)}>
               <Product product={product} />
             </div>
           ))}
-        </div>
+        </div> */}
 
         {/* View All Products Button */}
         <div className="text-center ">
